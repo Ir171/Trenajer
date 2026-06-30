@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Признаки дробления бизнеса</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f2f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+      padding: 1.5rem;
+    }
+
+    .card {
+      max-width: 820px;
+      width: 100%;
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 20px 40px -12px rgba(0, 20, 40, 0.25);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .header {
+      background: #95CAFA;
+      padding: 1.75rem 2rem 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #0a1e2f;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .checklist {
+      padding: 1.5rem 2rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .check-item {
+      border-radius: 18px;
+      background: #ffffff;
+      transition: box-shadow 0.15s ease, background 0.15s ease;
+      border: 1px solid #e9edf4;
+      overflow: hidden;
+    }
+
+    .check-item:hover {
+      border-color: #cbd8e9;
+    }
+
+    .item-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.1s ease;
+    }
+
+    .item-header:hover {
+      background: #f8faff;
+    }
+
+    .item-header .icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 30px;
+      background: #f0f4fe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #1f4970;
+      transition: all 0.2s ease;
+      border: 1px solid #dbe5f2;
+    }
+
+    .item-header .title {
+      font-weight: 600;
+      font-size: 1.08rem;
+      color: #122b44;
+      letter-spacing: -0.01em;
+      flex: 1;
+    }
+
+    .item-header .arrow {
+      font-size: 1.25rem;
+      color: #809ab8;
+      transition: transform 0.25s ease, color 0.2s;
+      margin-left: 0.25rem;
+      line-height: 1;
+    }
+
+    .check-item.active .item-header .arrow {
+      transform: rotate(180deg);
+      color: #2a5c8a;
+    }
+
+    .check-item.active .item-header .icon {
+      background: #95CAFA;
+      border-color: #7db4e0;
+      color: #0a2a44;
+    }
+
+    .item-detail {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.32s cubic-bezier(0.2, 0.9, 0.3, 1), 
+                  opacity 0.25s ease, 
+                  padding 0.2s ease;
+      padding: 0 1.25rem 0 1.25rem;
+      background: #fafcff;
+      border-top: 1px solid transparent;
+    }
+
+    .check-item.active .item-detail {
+      max-height: 300px;
+      opacity: 1;
+      padding: 0.9rem 1.25rem 1.2rem 1.25rem;
+      border-top-color: #e2ebf7;
+    }
+
+    .item-detail p {
+      font-size: 0.98rem;
+      line-height: 1.5;
+      color: #1c3d5e;
+      margin: 0;
+      font-weight: 400;
+      letter-spacing: 0.005em;
+    }
+
+    .item-detail p::before {
+      content: "— ";
+      color: #6f93b9;
+      font-weight: 300;
+    }
+
+    @media (max-width: 550px) {
+      .header {
+        padding: 1.25rem 1.25rem 1rem 1.25rem;
+      }
+      .header h1 {
+        font-size: 1.35rem;
+      }
+      .checklist {
+        padding: 1rem 1rem 1.5rem 1rem;
+      }
+      .item-header {
+        padding: 0.85rem 1rem;
+      }
+      .item-header .title {
+        font-size: 0.98rem;
+      }
+      .item-detail p {
+        font-size: 0.92rem;
+      }
+      .check-item.active .item-detail {
+        padding: 0.7rem 1rem 1rem 1rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .item-header .icon {
+        width: 24px;
+        height: 24px;
+        font-size: 0.9rem;
+      }
+      .item-header .title {
+        font-size: 0.9rem;
+      }
+    }
+
+    ul, li {
+      list-style: none;
+    }
+
+    .check-item {
+      transform: translateY(0);
+      transition: transform 0.1s ease, border 0.15s ease;
+    }
+    .check-item:active .item-header {
+      background: #ecf3fd;
+    }
+
+    .check-item:not(:last-child) {
+      margin-bottom: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <div class="header">
+      <h1>По каким признакам инспекторы решат, что вы дробите бизнес</h1>
+    </div>
+
+    <div class="checklist" id="checklistContainer">
+      <!-- пункты будут вставлены js -->
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const itemsData = [
+        {
+          title: "Формальное разделение",
+          description: "Участники схемы – родственники или штатные сотрудники основной компании."
+        },
+        {
+          title: "Единый IP-адрес",
+          description: "Платежи в Банке-клиенте у всех компаний уходят с одного компьютера."
+        },
+        {
+          title: "Общий персонал",
+          description: "Бухгалтерия, юристы, кадровики и отдел продаж сидят в одном кабинете и работают на всех сразу."
+        },
+        {
+          title: "Единый колл-центр и сайт",
+          description: "Один номер стационарного или мобильного телефона и один домен для группы компаний."
+        },
+        {
+          title: "Единая логистика и склады",
+          description: "Общие поставщики и покупатели, один складской комплекс без четкого разграничения зон."
+        },
+        {
+          title: "Прямая финансовая помощь",
+          description: "Практикуются беспроцентные займы внутри группы, которые никогда не возвращаются."
+        },
+        {
+          title: "Несамостоятельность",
+          description: "Подконтрольные лица не принимают решений, у них нет собственных активов (оборудования, транспорта)."
+        }
+      ];
+
+      const container = document.getElementById('checklistContainer');
+      if (!container) return;
+
+      function buildChecklist() {
+        container.innerHTML = '';
+
+        itemsData.forEach((item, index) => {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'check-item';
+          itemDiv.dataset.index = index;
+
+          const header = document.createElement('div');
+          header.className = 'item-header';
+          header.setAttribute('role', 'button');
+          header.setAttribute('tabindex', '0');
+          header.setAttribute('aria-expanded', 'false');
+
+          const iconSpan = document.createElement('span');
+          iconSpan.className = 'icon';
+          iconSpan.textContent = index + 1;
+
+          const titleSpan = document.createElement('span');
+          titleSpan.className = 'title';
+          titleSpan.textContent = item.title;
+
+          const arrowSpan = document.createElement('span');
+          arrowSpan.className = 'arrow';
+          arrowSpan.textContent = '▾';
+
+          header.appendChild(iconSpan);
+          header.appendChild(titleSpan);
+          header.appendChild(arrowSpan);
+
+          const detailDiv = document.createElement('div');
+          detailDiv.className = 'item-detail';
+          const p = document.createElement('p');
+          p.textContent = item.description;
+          detailDiv.appendChild(p);
+
+          itemDiv.appendChild(header);
+          itemDiv.appendChild(detailDiv);
+
+          header.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleItem(itemDiv, header);
+          });
+
+          header.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggleItem(itemDiv, header);
+            }
+          });
+
+          container.appendChild(itemDiv);
+        });
+      }
+
+      function toggleItem(itemElement, headerElement) {
+        const isActive = itemElement.classList.contains('active');
+        const allItems = container.querySelectorAll('.check-item');
+        allItems.forEach(otherItem => {
+          if (otherItem !== itemElement && otherItem.classList.contains('active')) {
+            otherItem.classList.remove('active');
+            const otherHeader = otherItem.querySelector('.item-header');
+            if (otherHeader) {
+              otherHeader.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+
+        if (isActive) {
+          itemElement.classList.remove('active');
+          headerElement.setAttribute('aria-expanded', 'false');
+        } else {
+          itemElement.classList.add('active');
+          headerElement.setAttribute('aria-expanded', 'true');
+        }
+      }
+
+      buildChecklist();
+    })();
+  </script>
+</body>
+</html>
